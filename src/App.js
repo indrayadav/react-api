@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import Articles from './components/articles';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+    render() {
+        return (
+            <Articles articles={this.state.articles} />
+        )
+    }
+
+    state = {
+        articles: []
+    };
+
+    componentDidMount() {
+        fetch('https://test.waituk.com/wp-json/entrada/v1/articles/')
+            .then(res => res.json())
+            .then((data) => {
+                this.setState({ articles: data })
+            })
+            .catch(console.log)
+    }
 }
 
 export default App;
